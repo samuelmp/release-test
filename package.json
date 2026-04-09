@@ -1,0 +1,47 @@
+{
+  "name": "release-test",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "auto": {
+    "plugins": [
+      "npm",
+      "conventional-commits",
+      "released"
+    ],
+    "labels": [
+      {
+        "name": "Version: Major",
+        "changelogTitle": "💥  Breaking Change",
+        "description": "Increment the major version when merged",
+        "releaseType": "major"
+      },
+      {
+        "name": "Version: Minor",
+        "changelogTitle": "🚀  Enhancement",
+        "description": "Increment the minor version when merged",
+        "releaseType": "minor"
+      },
+      {
+        "name": "Version: Patch",
+        "changelogTitle": "🐛  Bug Fix",
+        "description": "Increment the patch version when merged",
+        "releaseType": "patch"
+      },
+      {
+        "name": "Skip Release",
+        "description": "Preserve the current version when merged",
+        "releaseType": "skip"
+      },
+      {
+        "name": "Version: Internal",
+        "changelogTitle": "🏠  Internal",
+        "description": "Changes not affect our production environment",
+        "releaseType": "none"
+      }
+    ]
+  },
+  "packageManager": "npm@11.11.0"
+}

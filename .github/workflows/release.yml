@@ -1,0 +1,105 @@
+name: Release
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+  id-token: write
+  issues: write
+  packages: write
+  pull-requests: read
+  statuses: write
+
+jobs:
+  release:
+    name: Release
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Prepare repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch --tags
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com/
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install release tools
+        run: |
+          npm i @auto-it/conventional-commits --no-save
+          npm i auto --no-save
+          npm i lerna --no-save
+          git restore package-lock.json
+
+      # ============================================================
+      # DECOMPOSED RELEASE FLOW (no direct push to main)
+      #
+      # Instead of `npx auto shipit` which does:
+      #   1. version bump
+      #   2. changelog
+      #   3. publish
+      #   4. git push --atomic --follow-tags (BLOCKED by rulesets)
+      #   5. github release
+      #
+      # We decompose into individual steps, pushing only tags
+      # (which are NOT blocked by branch rulesets).
+      # ============================================================
+
+      - name: Calculate version bump
+        id: version
+        run: |
+          BUMP=$(npx auto version)
+          echo "bump=$BUMP" >> "$GITHUB_OUTPUT"
+          if [ -z "$BUMP" ] || [ "$BUMP" = "" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "No version bump needed"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "Version bump: $BUMP"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate changelog
+        if: steps.version.outputs.skip == 'false'
+        run: npx auto changelog
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Version packages (no push)
+        if: steps.version.outputs.skip == 'false'
+        run: npx lerna version ${{ steps.version.outputs.bump }} --yes --no-push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish packages
+        if: steps.version.outputs.skip == 'false'
+        run: npx lerna publish from-git --yes
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push tags only (not blocked by branch rulesets)
+        if: steps.version.outputs.skip == 'false'
+        run: git push origin --tags
+
+      - name: Create GitHub Release
+        if: steps.version.outputs.skip == 'false'
+        run: npx auto release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
