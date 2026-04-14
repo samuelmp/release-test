@@ -2,6 +2,18 @@
 
 #### 🐛  Bug Fix
 
+- fix: use %s placeholder for lerna version message [#7](https://github.com/samuelmp/release-test/pull/7) ([@samuelmp](https://github.com/samuelmp))
+
+#### Authors: 1
+
+- Samuel Moreno ([@samuelmp](https://github.com/samuelmp))
+
+---
+
+# (Tue Apr 14 2026)
+
+#### 🐛  Bug Fix
+
 - fix: update package-lock.json for @samuelmp scope [#4](https://github.com/samuelmp/release-test/pull/4) ([@samuelmp](https://github.com/samuelmp))
 - fix: install release tools together and filter auto version output [#2](https://github.com/samuelmp/release-test/pull/2) ([@samuelmp](https://github.com/samuelmp))
 - `@samuelmp/pkg-b@1.0.1`

@@ -1,9 +1,9 @@
 {
   "name": "@samuelmp/pkg-b",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "dependencies": {
-    "@samuelmp/pkg-a": "^1.0.1"
+    "@samuelmp/pkg-a": "^1.0.2"
   },
   "publishConfig": {
     "access": "restricted",
