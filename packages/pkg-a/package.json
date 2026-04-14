@@ -1,8 +1,9 @@
 {
-  "name": "@release-test/pkg-a",
+  "name": "@samuelmp/pkg-a",
   "version": "1.0.0",
   "main": "index.js",
   "publishConfig": {
-    "access": "restricted"
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
   }
 }
