@@ -2,6 +2,19 @@
 
 #### 🐛  Bug Fix
 
+- `@samuelmp/pkg-a@1.0.3`
+  - feat: export version from pkg-a [#8](https://github.com/samuelmp/release-test/pull/8) ([@samuelmp](https://github.com/samuelmp))
+
+#### Authors: 1
+
+- Samuel Moreno ([@samuelmp](https://github.com/samuelmp))
+
+---
+
+# (Tue Apr 14 2026)
+
+#### 🐛  Bug Fix
+
 - fix: use %s placeholder for lerna version message [#7](https://github.com/samuelmp/release-test/pull/7) ([@samuelmp](https://github.com/samuelmp))
 
 #### Authors: 1
