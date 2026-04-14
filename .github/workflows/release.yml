@@ -83,7 +83,7 @@ jobs:
       - name: Version packages (no push)
         if: steps.version.outputs.skip == 'false'
         run: |
-          npx lerna version ${{ steps.version.outputs.bump }} --yes --no-push --message "chore(release): %v [skip ci]"
+          npx lerna version ${{ steps.version.outputs.bump }} --yes --no-push --message "chore(release): %s [skip ci]"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
