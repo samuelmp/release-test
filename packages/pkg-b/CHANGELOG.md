@@ -1,3 +1,15 @@
+# v1.0.3 (Tue Apr 14 2026)
+
+#### 🐛  Bug Fix
+
+- chore(release): version bump \[skip ci\] ([@github-actions[bot]](https://github.com/github-actions[bot]))
+
+#### Authors: 1
+
+- [@github-actions[bot]](https://github.com/github-actions[bot])
+
+---
+
 # v1.0.2 (Tue Apr 14 2026)
 
 #### 🐛  Bug Fix

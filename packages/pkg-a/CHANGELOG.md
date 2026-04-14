@@ -1,3 +1,17 @@
+# v1.0.3 (Tue Apr 14 2026)
+
+#### 🐛  Bug Fix
+
+- feat: export version from pkg-a [#8](https://github.com/samuelmp/release-test/pull/8) ([@samuelmp](https://github.com/samuelmp))
+- chore(release): version bump \[skip ci\] ([@github-actions[bot]](https://github.com/github-actions[bot]))
+
+#### Authors: 2
+
+- [@github-actions[bot]](https://github.com/github-actions[bot])
+- Samuel Moreno ([@samuelmp](https://github.com/samuelmp))
+
+---
+
 # v1.0.2 (Tue Apr 14 2026)
 
 #### 🐛  Bug Fix
