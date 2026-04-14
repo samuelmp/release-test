@@ -42,9 +42,7 @@ jobs:
 
       - name: Install release tools
         run: |
-          npm i @auto-it/conventional-commits --no-save
-          npm i auto --no-save
-          npm i lerna --no-save
+          npm i auto @auto-it/conventional-commits lerna --no-save
           git restore package-lock.json
 
       # ============================================================
@@ -64,12 +62,12 @@ jobs:
       - name: Calculate version bump
         id: version
         run: |
-          BUMP=$(npx auto version)
-          echo "bump=$BUMP" >> "$GITHUB_OUTPUT"
-          if [ -z "$BUMP" ] || [ "$BUMP" = "" ]; then
+          BUMP=$(npx auto version 2>/dev/null | grep -oE '^(major|minor|patch)$' | tail -1)
+          if [ -z "$BUMP" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "No version bump needed"
           else
+            echo "bump=$BUMP" >> "$GITHUB_OUTPUT"
             echo "skip=false" >> "$GITHUB_OUTPUT"
             echo "Version bump: $BUMP"
           fi
