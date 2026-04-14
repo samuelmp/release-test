@@ -1,5 +1,18 @@
 # (Tue Apr 14 2026)
 
+#### 🚀  Enhancement
+
+- `@samuelmp/pkg-b@1.0.4`
+  - feat: export version from pkg-b [#11](https://github.com/samuelmp/release-test/pull/11) ([@samuelmp](https://github.com/samuelmp))
+
+#### Authors: 1
+
+- Samuel Moreno ([@samuelmp](https://github.com/samuelmp))
+
+---
+
+# (Tue Apr 14 2026)
+
 #### 🐛  Bug Fix
 
 - `@samuelmp/pkg-a@1.0.3`
