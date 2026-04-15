@@ -41,7 +41,7 @@ jobs:
 
       - name: Install release tools
         run: |
-          npm i auto @auto-it/conventional-commits lerna --no-save
+          npm i auto @auto-it/conventional-commits semver --no-save
           git restore package-lock.json
 
       # ============================================================
@@ -74,10 +74,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Version packages (local only, no commit, no tag)
+      - name: Version packages from tags (local only, no commit)
         if: steps.version.outputs.skip == 'false'
         run: |
-          npx lerna version ${{ steps.version.outputs.bump }} --yes --no-git-tag-version --no-push
+          BUMP=${{ steps.version.outputs.bump }}
+          for pkg_dir in packages/*/; do
+            name=$(node -p "require('./${pkg_dir}package.json').name")
+            latest_tag=$(git tag -l "${name}@*" --sort=-v:refname | head -1)
+            if [ -z "$latest_tag" ]; then
+              current="0.0.0"
+            else
+              current="${latest_tag##*@}"
+            fi
+            new_version=$(npx semver "$current" -i "$BUMP")
+            echo "${name}: ${current} -> ${new_version}"
+            (cd "$pkg_dir" && npm version "$new_version" --no-git-tag-version)
+          done
 
       - name: Publish packages
         if: steps.version.outputs.skip == 'false'
