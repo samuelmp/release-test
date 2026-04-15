@@ -81,7 +81,11 @@ jobs:
 
       - name: Publish packages
         if: steps.version.outputs.skip == 'false'
-        run: npx lerna publish from-package --yes
+        run: |
+          for pkg_dir in packages/*/; do
+            echo "Publishing ${pkg_dir}..."
+            (cd "$pkg_dir" && npm publish)
+          done
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
