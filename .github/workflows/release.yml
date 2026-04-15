@@ -10,7 +10,6 @@ permissions:
   id-token: write
   issues: write
   packages: write
-  pull-requests: write
   statuses: write
 
 jobs:
@@ -46,17 +45,12 @@ jobs:
           git restore package-lock.json
 
       # ============================================================
-      # DECOMPOSED RELEASE FLOW (no direct push to main)
+      # TAG-BASED RELEASE FLOW (no commits to main)
       #
-      # Instead of `npx auto shipit` which does:
-      #   1. version bump
-      #   2. changelog
-      #   3. publish
-      #   4. git push --atomic --follow-tags (BLOCKED by rulesets)
-      #   5. github release
-      #
-      # We decompose into individual steps, pushing only tags
-      # (which are NOT blocked by branch rulesets).
+      # The version source of truth is the git tag, not package.json.
+      # We bump versions locally in the runner, publish, create tags,
+      # and push only tags (not blocked by branch rulesets).
+      # package.json on main stays frozen.
       # ============================================================
 
       - name: Calculate version bump
@@ -80,38 +74,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Version packages (no push)
+      - name: Version packages (local only, no commit, no tag)
         if: steps.version.outputs.skip == 'false'
         run: |
-          npx lerna version ${{ steps.version.outputs.bump }} --yes --no-push --message "chore(release): %s [skip ci]"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          npx lerna version ${{ steps.version.outputs.bump }} --yes --no-git-tag-version --no-push
 
       - name: Publish packages
         if: steps.version.outputs.skip == 'false'
-        run: npx lerna publish from-git --yes
+        run: npx lerna publish from-package --yes
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push version bump via PR
+      - name: Create and push tags
         if: steps.version.outputs.skip == 'false'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH="release/version-bump-$(date +%s)"
-          git checkout -b "$BRANCH"
-          git push origin "$BRANCH"
-          PR_URL=$(gh pr create \
-            --title "chore(release): version bump [skip ci]" \
-            --body "Automated version bump from release workflow." \
-            --base main \
-            --head "$BRANCH")
-          gh pr merge "$PR_URL" --squash --delete-branch --admin \
-            --subject "chore(release): version bump [skip ci]"
-
-      - name: Push tags only (not blocked by branch rulesets)
-        if: steps.version.outputs.skip == 'false'
-        run: git push origin --tags
+          for pkg_dir in packages/*/; do
+            name=$(node -p "require('./${pkg_dir}package.json').name")
+            version=$(node -p "require('./${pkg_dir}package.json').version")
+            tag="${name}@${version}"
+            echo "Creating tag: $tag"
+            git tag "$tag"
+          done
+          git push origin --tags
 
       - name: Create GitHub Release
         if: steps.version.outputs.skip == 'false'
