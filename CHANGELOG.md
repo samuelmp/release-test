@@ -1,3 +1,17 @@
+# (Wed Apr 15 2026)
+
+#### 🐛  Bug Fix
+
+- fix: calculate version from git tags instead of package.json [#19](https://github.com/samuelmp/release-test/pull/19) ([@samuelmp](https://github.com/samuelmp))
+- `@samuelmp/pkg-b@1.1.1`
+  - fix: add greeting to pkg-b [#18](https://github.com/samuelmp/release-test/pull/18) ([@samuelmp](https://github.com/samuelmp))
+
+#### Authors: 1
+
+- Samuel Moreno ([@samuelmp](https://github.com/samuelmp))
+
+---
+
 # (Tue Apr 14 2026)
 
 #### 🚀  Enhancement

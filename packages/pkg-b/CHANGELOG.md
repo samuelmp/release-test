@@ -1,3 +1,15 @@
+# v1.1.1 (Wed Apr 15 2026)
+
+#### 🐛  Bug Fix
+
+- fix: add greeting to pkg-b [#18](https://github.com/samuelmp/release-test/pull/18) ([@samuelmp](https://github.com/samuelmp))
+
+#### Authors: 1
+
+- Samuel Moreno ([@samuelmp](https://github.com/samuelmp))
+
+---
+
 # v1.1.0 (Tue Apr 14 2026)
 
 #### 🚀  Enhancement
