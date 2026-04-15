@@ -1,3 +1,20 @@
+# (Wed Apr 15 2026)
+
+#### 🐛  Bug Fix
+
+- fix: use npm publish instead of lerna publish [#15](https://github.com/samuelmp/release-test/pull/15) ([@samuelmp](https://github.com/samuelmp))
+- chore: switch to tag-based release flow [#13](https://github.com/samuelmp/release-test/pull/13) ([@samuelmp](https://github.com/samuelmp))
+- `@samuelmp/pkg-b@1.1.1`
+  - feat: add description to pkg-b [#16](https://github.com/samuelmp/release-test/pull/16) ([@samuelmp](https://github.com/samuelmp))
+- `@samuelmp/pkg-a@1.1.1`
+  - feat: add description to pkg-a [#14](https://github.com/samuelmp/release-test/pull/14) ([@samuelmp](https://github.com/samuelmp))
+
+#### Authors: 1
+
+- Samuel Moreno ([@samuelmp](https://github.com/samuelmp))
+
+---
+
 # (Tue Apr 14 2026)
 
 #### 🚀  Enhancement

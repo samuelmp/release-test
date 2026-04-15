@@ -1,3 +1,17 @@
+# v1.1.1 (Wed Apr 15 2026)
+
+#### 🐛  Bug Fix
+
+- feat: add description to pkg-a [#14](https://github.com/samuelmp/release-test/pull/14) ([@samuelmp](https://github.com/samuelmp))
+- chore(release): version bump \[skip ci\] ([@github-actions[bot]](https://github.com/github-actions[bot]))
+
+#### Authors: 2
+
+- [@github-actions[bot]](https://github.com/github-actions[bot])
+- Samuel Moreno ([@samuelmp](https://github.com/samuelmp))
+
+---
+
 # v1.1.0 (Tue Apr 14 2026)
 
 #### 🐛  Bug Fix
