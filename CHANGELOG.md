@@ -1,3 +1,16 @@
+# (Wed Apr 15 2026)
+
+#### 🚀  Enhancement
+
+- `@samuelmp/pkg-a@1.1.1`
+  - feat: add greeting to pkg-a [#17](https://github.com/samuelmp/release-test/pull/17) ([@samuelmp](https://github.com/samuelmp))
+
+#### Authors: 1
+
+- Samuel Moreno ([@samuelmp](https://github.com/samuelmp))
+
+---
+
 # (Tue Apr 14 2026)
 
 #### 🚀  Enhancement
